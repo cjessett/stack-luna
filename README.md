@@ -1,6 +1,12 @@
 # stack-luna
 
+This is a script that manages your [Anchor](https://www.anchorprotocol.com/) Borrow LTV.
 
+#### What's going on?
+
+Based on your configuration the script polls your LTV every 5s. If it's above your `LTV_TRIGGER` it will try to liquidate your UST in Anchor Earn. If that's not enough to get to `LTV_TARGET`, it will liquidate your LUNA <> UST LP from Terraswap. Then it will repay your loan on Anchor.
+
+This is not intended to be failsafe, it was hacked together in a day. Feedback is encouraged, [open an issue](https://gitlab.com/topher.ust/stack-luna/-/issues/new).
 
 ## Getting started
 
