@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "scripts": {
     "build": "react-scripts build",
-    "start": "react-scripts start",
+    "start": "pm2 start src/utils/index.ts",
+    "monit": "pm2 monit",
+    "dev": "yarn start && yarn monit",
     "test": "react-scripts test --colors",
     "coverage": "react-scripts test --coverage",
     "precommit": "lint-staged",
