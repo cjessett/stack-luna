@@ -1,9 +1,8 @@
 require('dotenv').config()
 
-import { LCDClient, MnemonicKey, Wallet } from '@terra-money/terra.js';
 import { fetchLoanData, queryTerraswapLunaUstBalance, lunaUstLPSimulation, fabricateTerraswapWithdrawLunaUst } from './api';
 import { fromMicroAmount, calculateLTV, display } from './helpers';
-import { MARKET_DENOMS, OperationGasParameters, queryMarketEpochState } from '@anchor-protocol/anchor.js';
+import { MARKET_DENOMS, queryMarketEpochState } from '@anchor-protocol/anchor.js';
 import { init } from './terra';
 import { ltvParams, address, gasParameters, opts } from './constants';
 
@@ -67,7 +66,7 @@ async function repay(amount: string) {
   return await anchor.borrow.repay({ ...opts, amount }).execute(wallet, gasParameters);
 }
 
-async function main() {
+export async function main() {
   let liquidated = 0;
   const { ltv, toRepay } = await fetchLoan();
 
@@ -79,15 +78,9 @@ async function main() {
       liquidated += await liquidationStrat.lp(toRepay - liquidated);
     }
 
-    const repayTx = await repay(liquidated.toString());
+    await repay(liquidated.toString());
     console.log(`*** Repaid $${liquidated} ***`);
   }
 
   setTimeout(main, 5000);
 }
-
-console.clear();
-console.log(`LTV Params Trigger: ${ltvParams.UPPER}% | Target: ${ltvParams.TARGET * 100}%`);
-console.log('Anchor LTV');
-
-main();
