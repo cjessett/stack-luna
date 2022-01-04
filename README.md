@@ -10,12 +10,34 @@ This is not intended to be failsafe, it was hacked together in a day. Feedback i
 
 ## Getting started
 
+Create a `.env` file and set env variable as in [.env.test](./.env.test).
+```
+LTV_LIMIT=0.6 // Anchor liquidation LTV
+LTV_MAX=60 // Anchor liquidation LTV
+LTV_TRIGGER=53 // LTV ratio to trigger loan pay down
+LTV_TARGET=0.44 // LTV to pay down to
+WALLET_ADDRESS=terra..wallet..address
+MNEMONIC="your seed phrase here"
+```
+
+### Docker
+
+Pull the Docker image:
+
+```
+docker pull registry.gitlab.com/topher.ust/stack-luna:latest
+docker run --env-file .env registry.gitlab.com/topher.ust/stack-luna
+```
+
+Or run in the background with:
+```
+docker run -d --env-file .env registry.gitlab.com/topher.ust/stack-luna
+```
+
+### Run from source
+
 Install dependencies
 `yarn install`
-
-
-Create a `.env` file and set env variable as in [.env.test](./.env.test).
-
 
 Start the script
 `yarn dev`
