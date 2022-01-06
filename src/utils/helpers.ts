@@ -6,7 +6,7 @@ const Gauge = clui.Gauge;
 
 export const toFixed = (num: number): number => Number(num.toFixed(2));
 
-export const fromMicroAmount = (microAmount: number): number => toFixed(Number(microAmount) / 1_000_000);
+export const fromMicroAmount = (microAmount: number): number => (Number(microAmount) / 1_000_000);
 
 export const calculateLTV = (loanAmount: number, borrowLimit: number): number => toFixed((loanAmount * 0.6 / borrowLimit) * 100);
 
@@ -18,4 +18,14 @@ export function display(ltv: number) {
   const gauge = Gauge(ltv, ltvParams.MAX, 60, ltvParams.UPPER - 5, `${ltv}%`);
   // process.stdout.cursorTo(0);
   console.log(gauge);
+}
+
+export function handleLogError(error: any) {
+  console.log("!!! ERROR !!!!");
+
+  if (error.response) {
+    console.log(`${error.response.statusText} - ${error.response.data.message}`);
+  } else {
+    console.log(error);
+  }
 }
